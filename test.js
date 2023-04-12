@@ -7,6 +7,7 @@ var multer  =   require('multer');
 var fileTOIPFS = null;
 let alert = require('alert'); 
 var bodyParser = require('body-parser');
+var startedMoralis = false;
 var storage =   multer.diskStorage({  
   destination: function (req, file, callback) {  
     callback(null, './uploads');  
@@ -59,7 +60,11 @@ app.use(express.static(__dirname, { // host the whole directory
 }))
 
 app.get("/", (req, res) => {
-  startMoralis();
+  if(!startedMoralis)
+  
+  {startMoralis();
+    startedMoralis = true;
+  }
 res.sendFile(__dirname + "/upload.html")
 
 })
