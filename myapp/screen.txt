@@ -1,0 +1,17 @@
+[
+    {
+      "name": "Png Test",
+      "cat": "Comp Sci",
+      "site": "https://ipfs.io/ipfs/QmVXLM86QRaCzKcUeXPjA9KwNGrhsq6o8CdzJFaMvtK2BA?filename=IMG-1499.jpg"
+    },
+    {
+      "name": "Pdf Test",
+      "cat": "Comp Sci",
+      "site": "https://www.myfitnesspal.com/"
+    },
+    {
+      "name": "Text Test",
+      "cat": "MATH",
+      "site": "https://ipfs.moralis.io:2053/ipfs/QmY91MPUrxMHvK3DnR78s1U9M6mrDiQpVNAK2H9YUwQ51p/example_input_1.txt"
+    }
+]
