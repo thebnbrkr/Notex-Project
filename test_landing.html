@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Names</title>
+    <!-- ADDING BOOTSTRAP CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <ul class="list-group" id="name-list">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- ADDING JQUERY AND BOOTSTRAP JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.getJSON("test.json", function(jsonData) {
+                // iterate over the array to create cards
+                $.each(jsonData, function (key, value) {
+                    var cardHtml = '<li class="list-group-item">' +
+                        '<div class="card">' +
+                        '<div class="card-header">' + value.name + '</div>' +
+                        '<div class="card-body">' +
+                        '<p>Age: ' + value.age + '</p>' +
+                        '<p>Car: ' + (value.car ? value.car : "N/A") + '</p>' +
+                        '</div>' +
+                        '</div>' +
+                        '</li>';
+                    $('#name-list').append(cardHtml);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
