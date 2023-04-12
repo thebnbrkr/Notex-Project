@@ -69,7 +69,7 @@ body::before{
                        Building world's largest Blockchain based note sharing system for universiry students across Globe. It is easy to start, upload your notes or review other's notes and earn Notex. Then use notex to access any notes from anywhere in the world!
                       </p>
                       <!--Modal  on button click-->
-                    <button class="btn btn-primary btn-lg my-4" data-bs-toggle="modal" data-bs-target="#enroll">Start the enrollment</button>
+                    
                 </div>
                 <img class="img-fluid w-50 d-none d-sm-block" src="pics/notex_clear.png" alt=""> <!--img fluid for size to be bound to the container, w50 for 50% size-->
             </div>
@@ -84,18 +84,26 @@ body::before{
                 <div class="col-md-12 col-lg-12"><!-- there is a total of 12 columns, this takes half so 6/12, on large screens it is 3/12-->
                     <div class="card bg-light">
                         <div class="card-body">
-                            <form>
+ <!-- 
+                            <form id="uploadForm" enctype="multipart/form-data" action="/uploadjavatpoint" method="post">  
+                                <input type="file" name="myfile" /><br/><br/>  
+                                <input type="submit" value="Upload Image" name="submit"><br/><br/>  
+                                <span id="status"></span>  
+                               </form>  
+                            -->
+                                <form id="uploadForm" enctype="multipart/form-data" action="/uploadjavatpoint" method="post">
                                 
                                 <div class="mb-3">
                                     <label for="formFile" class="form-label">Choose the file you want!</label>
-                                    <input class="form-control" type="file" id="formFile">
+                                    <input class="form-control" type="file" name="myfile" >
                                   </div>
                                   <div class="mb-3 text-center">
-                                    <button type="submit" class="btn btn-primary mb-3 text-center">Submit</button>
+                                    <input type="submit" class="btn btn-primary mb-3 text-center" value="Upload Image" name="submit">
+                                    <span id="status"></span> 
                                   </div>
                                 
 
-                                <!-- Subject toggles-->
+                                
                                 <div class="row g-4 ">
                                     <div class="col-md-6 col-lg-3">
                                          <div class="form-check form-switch">
@@ -211,7 +219,7 @@ body::before{
                                 </div>
                                 
                                
-                              </form>
+                            </form>
                         </div>
                     </div>
                 </div>
