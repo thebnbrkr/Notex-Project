@@ -5,6 +5,8 @@ const Moralis = require("moralis").default;
 var formidable = require('formidable');
 var multer  =   require('multer');
 var fileTOIPFS = null;
+let alert = require('alert'); 
+var bodyParser = require('body-parser');
 var storage =   multer.diskStorage({  
   destination: function (req, file, callback) {  
     callback(null, './uploads');  
@@ -17,11 +19,17 @@ var storage =   multer.diskStorage({
 });  
 var upload = multer({ storage : storage}).single('myfile'); 
 
+async function startMoralis()
+{
+  await Moralis.start({
+    apiKey: "8eORD5qJgGXoxwFGWjHVI7SualZIcBu174kozRijTRU8PvszGdN3txAKHMes4kGW",
+});
+}
+
+
 async function uploadToIpfs(filename) {
 
-  await Moralis.start({
-      apiKey: "8eORD5qJgGXoxwFGWjHVI7SualZIcBu174kozRijTRU8PvszGdN3txAKHMes4kGW",
-  });
+  
 
   const uploadArray = [
       {
@@ -46,6 +54,7 @@ app.use(express.static(__dirname, { // host the whole directory
 }))
 
 app.get("/", (req, res) => {
+  startMoralis();
 res.sendFile(__dirname + "/upload.html")
 
 })
@@ -55,8 +64,10 @@ app.post('/uploadjavatpoint',function(req,res){
       if(err) {  
           return res.end("Error uploading file.");  
       }  
-      res.end("File is uploaded successfully!"); 
+      //res.end("File is uploaded successfully!"); 
+      console.log(req.body);
       uploadToIpfs(fileTOIPFS);
+      res.sendFile(__dirname + "/upload_success.html")
   });  
   
 });  
