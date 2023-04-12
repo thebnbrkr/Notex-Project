@@ -44,6 +44,11 @@ async function uploadToIpfs(filename) {
   });
 
   console.log(response.result)
+  console.log(typeof response.result)
+  fs.appendFile('message.txt',','+ JSON.stringify(response.result), function (err) {
+    if (err) throw err;
+    console.log('Saved!');
+  });
 }
   
 
