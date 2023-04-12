@@ -1,0 +1,93 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2636
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 #Bonus question a5\
+.data\
+msg: .asciiz " Enter the number of disks: "\
+inst1: .asciiz " Move disk "\
+inst2: .asciiz " from peg "\
+inst3: .asciiz " to peg "\
+inst4: .asciiz ".\\n "\
+test1: .asciiz "before first recursize call"\
+\
+.text\
+main:\
+	#read the number of disks t0 from user\
+	la	$a0, msg\
+	li	$v0, 4		#print_str\
+	syscall\
+	li	$v0, 5		#read_int\
+	syscall\
+	#calling hanoi\
+	add	$a0, $v0, $0	#a0 = number of disks\
+	li	$a1, 1		#a1 = 1\
+	li	$a2, 2		#a2 = 2\
+	li	$a3, 3		#a3 = 3\
+	jal 	hanoi\
+	#exit main\
+	li	$v0,10		#code for exiting\
+	syscall\
+#Procedure: hanoi\
+#input		a0: number of disks	a1: source peg	a2: destination peg	a3: helper peg\
+# outputdisplay the solution to hanoi puzzle\
+hanoi:\
+	#prologue\
+	addi	$sp, $sp, -20\
+	sw 	$ra, ($sp)\
+	sw 	$a0, 4($sp)	#n\
+	sw 	$a1, 8($sp)	#src\
+	sw 	$a2, 12($sp)	#dest\
+	sw 	$a3, 16($sp)	#helper\
+	\
+	#Body\
+	beq 	$a0, $0, end	#go to end if(n==0)\
+	\
+	#first recursive call:\
+	addi 	$a0, $a0, -1	#a0 = a0-1, a1 is not changed or the recursive call\
+	lw	$a1, 8($sp)	#src\
+	lw	$a2, 8($sp)	#helper\
+	lw	$a3, 8($sp)	#dest\
+	jal 	hanoi\
+	\
+	#dont need to immediately restore a0-a3 after the recursive call\
+	#restore their values whenevr needed from the stack\
+	\
+	#print instructions to user\
+	li	$v0, 4		#code to print_str\
+	la	$a0, inst1	#"Move disk"\
+	syscall\
+	li	$v0, 1		#code to print_int\
+	lw	$a0, 4($sp)	#n\
+	syscall			#"src"\
+	li	$v0, 4		#code to print_str\
+	la	$a0, inst2	#" from peg"\
+	syscall\
+	li	$v0, 1		#code to print_int\
+	lw	$a0, 8($sp)	#src\
+	syscall\
+	li	$v0, 4		#code to print_str\
+	la	$a0, inst3	#" to peg"\
+	syscall\
+	li	$v0, 1		#code to print_int\
+	lw	$a0, 12($sp)	#dest\
+	syscall\
+	li	$v0, 4		#code to print_str\
+	la	$a0, inst4	#" .\\n"\
+	syscall\
+	\
+	#second recursive call:\
+	lw	$a0, 4($sp)	#restore a0 = n after syscall\
+	addi	$a0, $a0, -1	#a0 = a0 -1\
+	lw	$a1, 16($sp)	#helper\
+	lw	$a2, 12($sp)	#dest\
+	lw	$a3, 8($sp)	#src\
+	jal hanoi\
+	\
+	#Epilogue\
+	lw	$ra, ($sp)\
+	addi	$sp, $sp, 20\
+	jr	$ra}
