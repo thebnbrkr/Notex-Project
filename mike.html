@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Names</title>
+<!-- ADDING BOOTSTRAP CSS -->
+<link rel="stylesheet" href= "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+</script>
+</head>
+
+<script>
+
+// JavaScript code 
+function search_animal() { 
+	let input = document.getElementById('searchbar').value 
+	input=input.toLowerCase(); 
+	let x = document.getElementsByClassName('animals'); 	  
+	for (i = 0; i < x.length; i++) {  
+		if (!x[i].innerHTML.toLowerCase().includes(input)) { 
+		x[i].style.display="none"; 
+		} 
+		else { 
+		x[i].style.display="list-item";                  
+		} 
+		} 
+}   
+	  
+</script>
+
+<style>
+	.main {
+	text-align: center;
+	margin: 2rem;
+}
+  
+  /* what you need */
+  
+  #searchbar{ 
+	   margin-left: 10%; 
+	   padding:10px; 
+	   border-radius: 7px; 
+} 
+   
+  
+	 input[type=text] { 
+		width: 30%; 
+		-webkit-transition: width 0.15s ease-in-out; 
+		transition: width 0.15s ease-in-out; 
+} 
+   
+	 /* When the input field gets focus, 
+		  change its width to 100% */
+	 input[type=text]:focus { 
+	   width: 70%; 
+} 
+   
+	#list{ 
+	  list-style-type: none;
+} 
+   
+  .animals{ 
+	 display: list-item;     
+	}  
+</style>  
+
+<body style="background-color: #0275d8;">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">Notex</a>
+	
+		<div class="collapse navbar-collapse">
+		  <ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+			  <a class="nav-link" href="#">Upload</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="#">About</a>
+			</li>
+		  </ul>      
+		  <input id="searchbar" onkeyup="search_animal()" type="text"
+		  name="search" placeholder="Search...">
+	
+			<button class="btn btn-light my-2 my-sm-0"
+					type="submit">
+			  Search
+			</button>
+		  </form>
+		</div>
+</nav>
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <ul class="list-group" id="name-list">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- ADDING JQUERY AND BOOTSTRAP JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.getJSON('point.txt', function (jsonData) {
+                // iterate over the array to create cards
+                $.each(jsonData, function (key, value) {
+				var parts = value.path.split('/');
+				var name = parts[parts.length - 1];
+            	//var lastUrlElem = urlArr.pop();
+            	var cardHtml = '<li class="animals">' +
+                '<div class="card">' +
+                '<div class="card-header"><b>' + name + '</b></div>' +
+                '<div class="card-body">' +
+                '<a href="'+ value.path + '" class="btn btn-primary">'+ ' Button </a>' +
+                '</div>' +
+                '</div>' +
+                '<br>' +
+                '</li>';
+            $('#name-list').append(cardHtml);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
